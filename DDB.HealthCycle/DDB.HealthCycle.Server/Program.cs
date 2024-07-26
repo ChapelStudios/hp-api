@@ -1,5 +1,6 @@
 using DDB.HealthCycle.Data;
 using DDB.HealthCycle.Data.TestData;
+using DDB.HealthCycle.DataAccess.DateTimeProvider;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<PlayerCharacterContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("PlayerCharacterContext")));
+
+// Services
+builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
 var app = builder.Build();
 
