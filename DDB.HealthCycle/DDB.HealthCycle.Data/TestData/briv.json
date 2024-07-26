@@ -1,0 +1,54 @@
+{
+  "name": "Briv",
+  "level": 5,
+  // I've upgraded this from a simple number into an object in order to allow us to track more complex HP data like temp HP
+  // Old line for reference:
+  //"hitPoints": 25,
+  "hitPoints": {
+    "current": 25,
+    // This actually should be a calcualted value from the level data and constitution after factoring in any items or class / feat data
+    "max": 25,
+    "temp": 0,
+    "nonLeathal": 0
+  },
+  // While I think it's outside of the scope of this example project I would actually structure this data on a per level basis
+  // This would allow us to track how many HP were gained at each level and allow easy changing of per level data
+  "classes": [
+    {
+      "name": "fighter",
+      "hitDiceValue": 10,
+      "classLevel": 5
+    }
+  ],
+  // there is a part of me that wants to reverse engineer this...
+  // they have a +2 con mod x 5 Levels means 10 HP comes from con and the other 15 should come from hitDice from classes (though that unrealistically low for a fighter, but this is sample data.
+  "stats": {
+    "strength": 15,
+    "dexterity": 12,
+    "constitution": 14,
+    "intelligence": 13,
+    "wisdom": 10,
+    "charisma": 8
+  },
+  "items": [
+    // Then the system should read this and give them and additional 5 HP
+    {
+      "name": "Ioun Stone of Fortitude",
+      "modifier": {
+        "affectedObject": "stats",
+        "affectedValue": "constitution",
+        "value": 2
+      }
+    }
+  ],
+  "defenses": [
+    {
+      "type": "fire",
+      "defense": "immunity"
+    },
+    {
+      "type": "slashing",
+      "defense": "resistance"
+    }
+  ]
+}
