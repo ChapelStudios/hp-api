@@ -1,8 +1,10 @@
 ﻿namespace DDB.HealthCycle.Models.DTO;
 
-public class PlayerCharacter(int maxHP, PlayerCharacterAbilities abilities)
+public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abilities)
 {
     public string Name { get; set; } = string.Empty;
+
+    public string Id { get; set; } = id ?? Guid.NewGuid().ToString();
 
     // All PlayerCharacters start at level 1
     public int Level { get; set; } = 1;

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.DataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Data", "DDB.HealthCycle.Data\DDB.HealthCycle.Data.csproj", "{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Models", "DDB.HealthCycle.Models\DDB.HealthCycle.Models.csproj", "{F8A3F208-1923-408A-B2FF-F85283FE162A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8A3F208-1923-408A-B2FF-F85283FE162A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A3F208-1923-408A-B2FF-F85283FE162A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A3F208-1923-408A-B2FF-F85283FE162A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A3F208-1923-408A-B2FF-F85283FE162A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

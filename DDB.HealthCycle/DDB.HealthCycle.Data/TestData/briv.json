@@ -1,5 +1,6 @@
 {
   "name": "Briv",
+  "id":  "",
   "level": 5,
   // I've upgraded this from a simple number into an object in order to allow us to track more complex HP data like temp HP
   // Old line for reference:

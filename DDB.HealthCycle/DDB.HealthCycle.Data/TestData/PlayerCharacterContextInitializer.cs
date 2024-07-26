@@ -1,4 +1,5 @@
-﻿using DDB.HealthCycle.Data.Models;
+﻿using DDB.HealthCycle.Models.DataModels;
+using DDB.HealthCycle.Models.DTO;
 using Newtonsoft.Json;
 
 namespace DDB.HealthCycle.Data.TestData;
@@ -18,8 +19,9 @@ public static class PlayerCharacterContextInitializer
 
         PlayerCharacter? briv = JsonConvert.DeserializeObject<PlayerCharacter>(jsonData)
             ?? throw new Exception("Invalid json data.");
+        briv.Id = Guid.NewGuid().ToString();
 
-        pcContext.Add(new PlayerCharacterRecord("briv", briv));
+        pcContext.Add(new PlayerCharacterRecord(briv));
 
         pcContext.SaveChanges();
     }

@@ -11,4 +11,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DDB.HealthCycle.Models\DDB.HealthCycle.Models.csproj" />
+  </ItemGroup>
+
 </Project>

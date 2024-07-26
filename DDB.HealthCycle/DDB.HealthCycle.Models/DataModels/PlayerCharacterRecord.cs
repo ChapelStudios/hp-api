@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace DDB.HealthCycle.Models.DataModels;
 
-public class PlayerCharacterRecord
+public class PlayerCharacterRecord: DbModelBase
 {
     public string Id { get; set; }
 
@@ -17,9 +17,19 @@ public class PlayerCharacterRecord
         Id = id;
     }
 
-    public PlayerCharacterRecord(string id, PlayerCharacter pc)
+    public PlayerCharacterRecord(PlayerCharacter pc)
     {
-        Id = id;
+        Id = pc.Id;
+        CharacterData = JsonConvert.SerializeObject(pc);
+    }
+
+    public PlayerCharacter? Unpack()
+    {
+        return JsonConvert.DeserializeObject<PlayerCharacter>(CharacterData);
+    }
+
+    public void Pack(PlayerCharacter pc)
+    {
         CharacterData = JsonConvert.SerializeObject(pc);
     }
 }

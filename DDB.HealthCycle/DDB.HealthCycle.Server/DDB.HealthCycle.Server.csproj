@@ -21,6 +21,7 @@
     <ProjectReference Include="..\ddb.healthcycle.client\ddb.healthcycle.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\DDB.HealthCycle.DataAccess\DDB.HealthCycle.DataAccess.csproj" />
     <ProjectReference Include="..\DDB.HealthCycle.Data\DDB.HealthCycle.Data.csproj" />
   </ItemGroup>
 
