@@ -2,6 +2,7 @@ using DDB.HealthCycle.Data;
 using DDB.HealthCycle.Data.TestData;
 using DDB.HealthCycle.DataAccess.DateTimeProvider;
 using DDB.HealthCycle.DataAccess.PlayerCharacters;
+using DDB.HealthCycle.Logic.PcHealth;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<PlayerCharacterContext>(options => options.UseSqlS
 // Services
 builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped<IPlayerCharacterRepo, PlayerCharacterRepo>();
+builder.Services.AddScoped<IPcHealthManager, PcHealthManager>();
 
 var app = builder.Build();
 
