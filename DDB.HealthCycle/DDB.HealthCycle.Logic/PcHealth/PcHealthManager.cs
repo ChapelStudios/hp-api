@@ -24,12 +24,12 @@ public class PcHealthManager(
     }
 
     /// <summary>
-    /// Heal a player character
+    /// Heal a player character.
     /// </summary>
     /// <param name="playerToHeal">ID of player to heal</param>
     /// <param name="amount">Amount to Heal</param>
     /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after healing has been applied. If the upsert fails, null is returned instead.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToHeal"/> doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
     public async Task<PlayerCharacterHealthStats?> HealAsync(string playerToHeal, int amount)
     {
