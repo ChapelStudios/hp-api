@@ -25,10 +25,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
             // This should theoretically check and fail out of the requesting user dosn't have access to the PC
             // but there is no user data for this expirement.
 
-            var pc = await _pcHealthManager.GetPlayerCharacterAsync(id);
-            return pc == null
-                ? StatusCode(500, "Unable to save updated character data, please try again")
-                : Ok(pc);
+            return Ok(await _pcHealthManager.GetPlayerCharacterAsync(id));
         }
         catch (ArgumentOutOfRangeException)
         {
@@ -52,7 +49,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="400"><paramref name="amount"/> is too low.</response>
     /// <response code="500">Internal error.</response>
     [HttpGet("{id}/heal")]
-    [ProducesResponseType(typeof(PlayerCharacter), 200)]
+    [ProducesResponseType(typeof(PlayerCharacterHealthStats), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
@@ -70,7 +67,9 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
         {
             var result = await _pcHealthManager.HealAsync(id, amount);
 
-            return Ok(result);
+            return result == null
+                ? StatusCode(500, "Unable to save updated character data, please try again")
+                : Ok(result);
         }
         catch (ArgumentOutOfRangeException)
         {
