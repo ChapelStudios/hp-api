@@ -12,7 +12,6 @@ public interface IPcHealthManager
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
     Task<PlayerCharacter> GetPlayerCharacterAsync(string playerId);
 
-
     /// <summary>
     /// Heal a player character
     /// </summary>
@@ -22,4 +21,14 @@ public interface IPcHealthManager
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
     Task<PlayerCharacterHealthStats?> HealAsync(string playerToHeal, int amount);
+
+    /// <summary>
+    /// Gives a player character Temp HP.
+    /// </summary>
+    /// <param name="playerToAffect">ID of player that should gain the Temp HP.</param>
+    /// <param name="amount">Amount of Temp HP to gain.</param>
+    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the Temp HP has been applied. If the upsert fails, null is returned instead.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
+    /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
+    Task<PlayerCharacterHealthStats?> AddTempHpAsync(string playerToAffect, int amount);
 }

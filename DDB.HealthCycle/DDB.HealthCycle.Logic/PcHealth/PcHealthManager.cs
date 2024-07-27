@@ -45,4 +45,26 @@ public class PcHealthManager(
             ? player.HitPoints
             : null;
     }
+
+    /// <summary>
+    /// Gives a player character Temp HP.
+    /// </summary>
+    /// <param name="playerToAffect">ID of player that should gain the Temp HP.</param>
+    /// <param name="amount">Amount of Temp HP to gain.</param>
+    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the Temp HP has been applied. If the upsert fails, null is returned instead.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
+    /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
+    public async Task<PlayerCharacterHealthStats?> AddTempHpAsync(string playerToAffect, int amount)
+    {
+        var player = await _pcRepo.GetCharacterByIdAsync(playerToAffect);
+
+        var newTempHp = Math.Max(amount, player.HitPoints.Temp);
+
+        _logger.LogInformation("Player {playerToAffect} Temp HP set to {newTempHp}", playerToAffect, newTempHp);
+        player.HitPoints.Temp = newTempHp;
+
+        return await _pcRepo.UpsertPlayerCharacterAsync(player)
+            ? player.HitPoints
+            : null;
+    }
 }
