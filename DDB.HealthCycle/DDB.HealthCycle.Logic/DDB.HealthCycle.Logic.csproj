@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DDB.HealthCycle.DataAccess\DDB.HealthCycle.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

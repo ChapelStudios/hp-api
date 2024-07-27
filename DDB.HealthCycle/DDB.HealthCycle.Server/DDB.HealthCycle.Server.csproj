@@ -23,6 +23,7 @@
     </ProjectReference>
     <ProjectReference Include="..\DDB.HealthCycle.DataAccess\DDB.HealthCycle.DataAccess.csproj" />
     <ProjectReference Include="..\DDB.HealthCycle.Data\DDB.HealthCycle.Data.csproj" />
+    <ProjectReference Include="..\DDB.HealthCycle.Logic\DDB.HealthCycle.Logic.csproj" />
   </ItemGroup>
 
 </Project>
