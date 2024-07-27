@@ -33,7 +33,7 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async void GetPlayerCharacter_ReturnsResultFromRepo()
+    public async Task GetPlayerCharacter_ReturnsResultFromRepo()
     {
         var pcHealthManager = GetSUT();
 
@@ -45,7 +45,7 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async void Heal_UpdatesHitPoints()
+    public async Task Heal_UpdatesHitPoints()
     {
         var expectedHp = 30;
         var pcHealthManager = GetSUT();
@@ -80,7 +80,7 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async void Heal_RespectsMaximumHp()
+    public async Task Heal_RespectsMaximumHp()
     {
         var pcHealthManager = GetSUT();
 
@@ -93,7 +93,7 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async void Heal_ReturnsNullWhenUpsertFails()
+    public async Task Heal_ReturnsNullWhenUpsertFails()
     {
         _pcRepoMock.Setup(p => p.UpsertPlayerCharacterAsync(It.IsAny<PlayerCharacter>()))
             .ReturnsAsync(false);
