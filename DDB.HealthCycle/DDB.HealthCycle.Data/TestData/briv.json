@@ -1,6 +1,6 @@
 {
   "name": "Briv",
-  "id":  "",
+  "id": "",
   "level": 5,
   // I've upgraded this from a simple number into an object in order to allow us to track more complex HP data like temp HP
   // Old line for reference:
@@ -8,7 +8,12 @@
   "hitPoints": {
     "current": 25,
     // This actually should be a calcualted value from the level data and constitution after factoring in any items or class / feat data
-    "max": 25,
+    // Aside from that, there is a part of me that wants to reverse engineer this...
+    // The original json has them at 25 HP but they have a +2 con mod x 5 Levels means 10 HP comes from con and the other 15 should come from hitDice from classes.
+    // Yet, that feels unrealistically low for a fighter, so I put it at an average of 6 per level, 30 in total.
+    // That give 30 from level + 15 from con (including item)
+    // Sorry to nerd out on that.
+    "max": 45,
     "temp": 0,
     "nonLeathal": 0
   },
@@ -21,8 +26,6 @@
       "classLevel": 5
     }
   ],
-  // there is a part of me that wants to reverse engineer this...
-  // they have a +2 con mod x 5 Levels means 10 HP comes from con and the other 15 should come from hitDice from classes (though that unrealistically low for a fighter, but this is sample data.
   "stats": {
     "strength": 15,
     "dexterity": 12,
@@ -42,14 +45,20 @@
       }
     }
   ],
-  "defenses": [
-    {
-      "type": "fire",
-      "defense": "immunity"
-    },
-    {
-      "type": "slashing",
-      "defense": "resistance"
-    }
-  ]
+  // I've reworked this into a Dictionary / JS Object, this allows us to have the type indexed for easier look ups
+  "defenses": {
+    "Fire": "Immunity",
+    "Slashing": "Resistance"
+  },
+  // Original for reference
+  //"defenses": [
+  //  {
+  //    "type": "fire",
+  //    "defense": "immunity"
+  //  },
+  //  {
+  //    "type": "slashing",
+  //    "defense": "resistance"
+  //  }
+  //]
 }

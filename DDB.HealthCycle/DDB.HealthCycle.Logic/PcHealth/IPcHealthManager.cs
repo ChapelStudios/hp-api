@@ -1,4 +1,5 @@
 ﻿using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.Enums;
 
 namespace DDB.HealthCycle.Logic.PcHealth;
 public interface IPcHealthManager
@@ -31,4 +32,16 @@ public interface IPcHealthManager
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
     Task<PlayerCharacterHealthStats?> AddTempHpAsync(string playerToAffect, int amount);
+
+    /// <summary>
+    /// Apply damage of a given type to player character after considering defenses and temp hp.
+    /// </summary>
+    /// <param name="playerToAffect">ID of player that should be damaged.</param>
+    /// <param name="damageType"><see cref="DamageType"/> of the attack.</param>
+    /// <param name="damageAmount">Amount of base damage to deal.</param>
+    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the damage has been applied. If the upsert fails, null is returned instead.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
+    /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
+    /// <exception cref="NotImplementedException">Thrown if the <paramref name="damageType"/> is invalid.</exception>
+    Task<PlayerCharacterHealthStats?> ApplyDamageAsync(string playerToAffect, DamageType damageType, int damageAmount);
 }

@@ -9,7 +9,7 @@ public static class PlayerCharacterContextInitializer
     {
         if (pcContext.PlayerCharacterRecords.Any())
         {
-            // only seed an empty db
+            // Only seed an empty db
             return;
         }
 

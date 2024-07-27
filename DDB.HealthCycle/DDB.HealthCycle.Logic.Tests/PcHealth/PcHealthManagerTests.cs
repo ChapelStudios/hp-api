@@ -2,6 +2,7 @@
 using DDB.HealthCycle.DataAccess.DateTimeProvider;
 using DDB.HealthCycle.DataAccess.PlayerCharacters;
 using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.Enums;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -53,13 +54,11 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.HealAsync(playerCharacterFixture.Id, 5);
 
         Assert.That(result, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(result?.Temp, Is.EqualTo(playerCharacterFixture.HitPoints.Temp));
-            Assert.That(result?.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
-            Assert.That(result?.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
-            Assert.That(result?.Current, Is.EqualTo(expectedHp));
-        });
+        AssertHitPointDataIsAccurate(
+                result,
+                expectedHp,
+                playerCharacterFixture.HitPoints.Temp);
+
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
             p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
@@ -107,7 +106,7 @@ public class PcHealthManagerTests
         _pcRepoMock.Verify(
             p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
                 p,
-                playerCharacterFixture.HitPoints.Current + 1,
+                playerCharacterFixture.HitPoints.Current,
                 playerCharacterFixture.HitPoints.Temp))),
             Times.Once);
     }
@@ -123,6 +122,10 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, tempHp);
 
         Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                playerCharacterFixture.HitPoints.Current,
+                tempHp);
 
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
@@ -147,6 +150,10 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, incomingTempHp);
 
         Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                playerCharacterFixture.HitPoints.Current,
+                expectedTempHp);
 
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
@@ -179,12 +186,156 @@ public class PcHealthManagerTests
             Times.Once);
     }
 
+    [Test()]
+    public async Task ApplyDamageAsync_AppliesZeroDamageWhenImmune()
+    {
+        var testDamageType = _fixture.Create<DamageType>();
+        playerCharacterFixture.Defenses.Clear();
+        playerCharacterFixture.Defenses.Add(testDamageType, DefenseType.Immunity);
+
+        var pcHealthManager = GetSUT();
+
+        var result = await pcHealthManager.ApplyDamageAsync(playerCharacterFixture.Id, testDamageType, _fixture.Create<int>());
+
+        Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                playerCharacterFixture.HitPoints.Current,
+                playerCharacterFixture.HitPoints.Temp);
+
+        _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
+        _pcRepoMock.Verify(
+            p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
+                p,
+                playerCharacterFixture.HitPoints.Current,
+                playerCharacterFixture.HitPoints.Temp))),
+            Times.Once);
+    }
+
+    [Test()]
+    public async Task ApplyDamageAsync_AppliesHalfDamageWithResistance()
+    {
+        var testDamageType = _fixture.Create<DamageType>();
+        playerCharacterFixture.Defenses.Clear();
+        playerCharacterFixture.Defenses.Add(testDamageType, DefenseType.Resistance);
+        playerCharacterFixture.HitPoints.Temp = 0;
+        var expectedHP = 20;
+
+        var pcHealthManager = GetSUT();
+
+        var result = await pcHealthManager.ApplyDamageAsync(playerCharacterFixture.Id, testDamageType, 10);
+
+        Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                expectedHP,
+                0);
+
+        _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
+        _pcRepoMock.Verify(
+            p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
+                p,
+                expectedHP,
+                0))),
+            Times.Once);
+    }
+
+    [Test()]
+    public async Task ApplyDamageAsync_AppliesFullDamageIfDefenseNotFound()
+    {
+        var testDamageType = _fixture.Create<DamageType>();
+        playerCharacterFixture.Defenses.Clear();
+        playerCharacterFixture.HitPoints.Temp = 0;
+        var expectedHP = 15;
+
+        var pcHealthManager = GetSUT();
+
+        var result = await pcHealthManager.ApplyDamageAsync(playerCharacterFixture.Id, testDamageType, 10);
+
+        Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                expectedHP,
+                0);
+
+        _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
+        _pcRepoMock.Verify(
+            p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
+                p,
+                expectedHP,
+                0))),
+            Times.Once);
+    }
+
+    [Test()]
+    [TestCase(10, 5, 5, 25)]
+    [TestCase(10, 10, 0, 25)]
+    [TestCase(10, 20, 0, 15)]
+    [TestCase(0, 20, 0, 5)]
+    [TestCase(10, 0, 10, 25)]
+    [TestCase(10, 100, 0, 0)]
+    public async Task ApplyDamageAsync_AppliesDamageToTempHpFirst(
+        int tempHp,
+        int damage,
+        int expectedRemainingTempHp,
+        int expectedRemainingHp
+    )
+    {
+        var testDamageType = _fixture.Create<DamageType>();
+        playerCharacterFixture.Defenses[testDamageType] = DefenseType.None;
+        playerCharacterFixture.HitPoints.Temp = tempHp;
+
+        var pcHealthManager = GetSUT();
+
+        var result = await pcHealthManager.ApplyDamageAsync(playerCharacterFixture.Id, testDamageType, damage);
+
+        Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                expectedRemainingHp,
+                expectedRemainingTempHp);
+
+        _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
+        _pcRepoMock.Verify(
+            p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
+                p,
+                expectedRemainingHp,
+                expectedRemainingTempHp))),
+            Times.Once);
+    }
+
+    // There is no way to test for an invalid DamageType as it will come back as DamageType.None
+    // If the invalid DamageType exists in defenses it will simply translate to whatever DefenseType is listed
+    [Test()]
+    public void ApplyDamageAsync_ThrowsIfInvalidDefenseType()
+    {
+        var testDamageType = _fixture.Create<DamageType>();
+        playerCharacterFixture.Defenses[testDamageType] = (DefenseType)42;
+        var pcHealthManager = GetSUT();
+
+        Assert.ThrowsAsync<NotImplementedException>(async () => await pcHealthManager.ApplyDamageAsync(playerCharacterFixture.Id, testDamageType, _fixture.Create<int>()));
+    }
+
     private PcHealthManager GetSUT()
     {
         return new(
             _pcRepoMock.Object,
             _loggerMock.Object
         );
+    }
+
+    private bool AssertHitPointDataIsAccurate(PlayerCharacterHealthStats? healthStats, int expectedCurrentHp, int expectedTempHp)
+    {
+        Assert.That(healthStats, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            // HP Deep Verification
+            Assert.That(healthStats?.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
+            Assert.That(healthStats?.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
+            Assert.That(healthStats?.Temp, Is.EqualTo(expectedTempHp));
+            Assert.That(healthStats?.Current, Is.EqualTo(expectedCurrentHp));
+        });
+        return true;
     }
 
     private bool VerifyPlayerCharacterData(PlayerCharacter character, int expectedCurrentHp, int expectedTempHp)
@@ -197,11 +348,7 @@ public class PcHealthManagerTests
             Assert.That(character.Level, Is.EqualTo(playerCharacterFixture.Level));
             Assert.That(character.Name, Is.EqualTo(playerCharacterFixture.Name));
             Assert.That(character.Stats, Is.EqualTo(playerCharacterFixture.Stats));
-            // HP Deep Verification
-            Assert.That(character.HitPoints.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
-            Assert.That(character.HitPoints.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
-            Assert.That(character.HitPoints.Temp, Is.EqualTo(expectedTempHp));
-            Assert.That(character.HitPoints.Current, Is.EqualTo(expectedCurrentHp));
+            AssertHitPointDataIsAccurate(character.HitPoints, expectedCurrentHp, expectedTempHp);
         });
         return true;
     }
