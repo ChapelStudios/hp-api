@@ -16,6 +16,4 @@ public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abil
     public PlayerCharacterAbilities Stats { get; set; } = abilities;
 
     public List<DamageTypeDefense> Defenses { get; set; } = [];
-
-    // JSON Converter requires a parameterless constructor
 }

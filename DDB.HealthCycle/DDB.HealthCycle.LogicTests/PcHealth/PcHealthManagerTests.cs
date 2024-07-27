@@ -17,7 +17,7 @@ public class PcHealthManagerTests
     private readonly Mock<ILogger<PcHealthManager>> _loggerMock = new();
     private readonly Mock<IDateTimeProvider> _dateTimeProviderMock = new();
 
-    private PlayerCharacter playerCharacterFixture;
+    private readonly PlayerCharacter playerCharacterFixture;
 
     public PcHealthManagerTests()
     {
