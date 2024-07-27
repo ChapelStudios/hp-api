@@ -69,6 +69,16 @@ public class PcHealthManager(
             : null;
     }
 
+    /// <summary>
+    /// Apply damage of a given type to player character after considering defenses and temp hp.
+    /// </summary>
+    /// <param name="playerToAffect">ID of player that should be damaged.</param>
+    /// <param name="damageType"><see cref="DamageType"/> of the attack.</param>
+    /// <param name="damageAmount">Amount of base damage to deal.</param>
+    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the damage has been applied. If the upsert fails, null is returned instead.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
+    /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
+    /// <exception cref="NotImplementedException">Thrown if the <paramref name="damageType"/> is invalid.</exception>
     public async Task<PlayerCharacterHealthStats?> ApplyDamageAsync(string playerToAffect, DamageType damageType, int damageAmount)
     {
         var player = await _pcRepo.GetCharacterByIdAsync(playerToAffect);
@@ -76,23 +86,35 @@ public class PcHealthManager(
         // We don't really care if this fails because it will just use the default value of None if it doesn't exist
         _ = player.Defenses.TryGetValue(damageType, out var applicableDefense);
 
-        int damageToApply = applicableDefense switch
+        (int damageToApply, string resistanceMsg) = applicableDefense switch
         {
-            DefenseType.Immunity => 0,
-            DefenseType.Resistance => (int)Math.Ceiling(damageAmount / 2m), // This is normally rounded up in DnD
-            DefenseType.None => damageAmount,
+            DefenseType.Immunity => (0, "Immunity"),
+            // This is normally rounded up in DnD
+            DefenseType.Resistance => ((int)Math.Ceiling(damageAmount / 2m), "Half-Damage Resistance"),
+            DefenseType.None => (damageAmount, "no defenses"),
             // In case new members are added to the enum but this statement isn't updated
             _ => throw new NotImplementedException($"DamageType {applicableDefense} has not been implemented")
         };
+
+        _logger.LogInformation(
+            "Player {playerToAffect} affected by {damageType} attack of {damageAmount} for {damageToApply} after {resistanceMsg} applied.",
+            playerToAffect,
+            damageType,
+            damageAmount,
+            damageToApply,
+            resistanceMsg);
+
 
         if (player.HitPoints.Temp > 0)
         {
             var applicableTempDamage =  Math.Min(damageToApply, player.HitPoints.Temp);
             damageToApply = Math.Max(0, applicableTempDamage);
+            _logger.LogInformation("Player {playerToAffect} Temp HP decreased by {applicableTempDamage}", playerToAffect, applicableTempDamage);
             player.HitPoints.Temp -= applicableTempDamage;
         }
 
         var applicableDamage = Math.Min(damageToApply, player.HitPoints.Current);
+        _logger.LogInformation("Player {playerToAffect} HP decreased by {applicableDamage}", playerToAffect, applicableDamage);
         player.HitPoints.Current -= applicableDamage;
 
         return await _pcRepo.UpsertPlayerCharacterAsync(player)
