@@ -10,7 +10,7 @@ public interface IPcHealthManager
     /// <returns>A <see cref="PlayerCharacter"/></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    Task<PlayerCharacter> GetPlayerCharacter(string playerId);
+    Task<PlayerCharacter> GetPlayerCharacterAsync(string playerId);
 
 
     /// <summary>
@@ -21,5 +21,5 @@ public interface IPcHealthManager
     /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after healing has been applied.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    Task<PlayerCharacterHealthStats?> Heal(string playerToHeal, int amount);
+    Task<PlayerCharacterHealthStats?> HealAsync(string playerToHeal, int amount);
 }

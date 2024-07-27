@@ -18,7 +18,7 @@ public class PcHealthManager(
     /// <returns>A <see cref="PlayerCharacter"/></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    public async Task<PlayerCharacter> GetPlayerCharacter(string playerId)
+    public async Task<PlayerCharacter> GetPlayerCharacterAsync(string playerId)
     {
         return await _pcRepo.GetCharacterByIdAsync(playerId);
     }
@@ -28,10 +28,10 @@ public class PcHealthManager(
     /// </summary>
     /// <param name="playerToHeal">ID of player to heal</param>
     /// <param name="amount">Amount to Heal</param>
-    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after healing has been applied.</returns>
+    /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after healing has been applied. If the upsert fails, null is returned instead.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    public async Task<PlayerCharacterHealthStats?> Heal(string playerToHeal, int amount)
+    public async Task<PlayerCharacterHealthStats?> HealAsync(string playerToHeal, int amount)
     {
         var player = await _pcRepo.GetCharacterByIdAsync(playerToHeal);
 
