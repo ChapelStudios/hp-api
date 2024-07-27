@@ -109,7 +109,7 @@ public class PcHealthManager(
         if (player.HitPoints.Temp > 0)
         {
             var applicableTempDamage =  Math.Min(damageToApply, player.HitPoints.Temp);
-            damageToApply = Math.Max(0, applicableTempDamage);
+            damageToApply = Math.Max(0, damageToApply - applicableTempDamage);
             _logger.LogInformation("Player {playerToAffect} Temp HP decreased by {applicableTempDamage}", playerToAffect, applicableTempDamage);
             player.HitPoints.Temp -= applicableTempDamage;
         }
