@@ -54,13 +54,11 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.HealAsync(playerCharacterFixture.Id, 5);
 
         Assert.That(result, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(result?.Temp, Is.EqualTo(playerCharacterFixture.HitPoints.Temp));
-            Assert.That(result?.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
-            Assert.That(result?.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
-            Assert.That(result?.Current, Is.EqualTo(expectedHp));
-        });
+        AssertHitPointDataIsAccurate(
+                result,
+                expectedHp,
+                playerCharacterFixture.HitPoints.Temp);
+
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
             p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
@@ -108,7 +106,7 @@ public class PcHealthManagerTests
         _pcRepoMock.Verify(
             p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
                 p,
-                playerCharacterFixture.HitPoints.Current + 1,
+                playerCharacterFixture.HitPoints.Current,
                 playerCharacterFixture.HitPoints.Temp))),
             Times.Once);
     }
@@ -124,6 +122,10 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, tempHp);
 
         Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                playerCharacterFixture.HitPoints.Current,
+                tempHp);
 
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
@@ -148,6 +150,10 @@ public class PcHealthManagerTests
         var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, incomingTempHp);
 
         Assert.That(result, Is.Not.Null);
+        AssertHitPointDataIsAccurate(
+                result,
+                playerCharacterFixture.HitPoints.Current,
+                expectedTempHp);
 
         _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
         _pcRepoMock.Verify(
@@ -189,6 +195,20 @@ public class PcHealthManagerTests
         );
     }
 
+    private bool AssertHitPointDataIsAccurate(PlayerCharacterHealthStats? healthStats, int expectedCurrentHp, int expectedTempHp)
+    {
+        Assert.That(healthStats, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            // HP Deep Verification
+            Assert.That(healthStats?.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
+            Assert.That(healthStats?.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
+            Assert.That(healthStats?.Temp, Is.EqualTo(expectedTempHp));
+            Assert.That(healthStats?.Current, Is.EqualTo(expectedCurrentHp));
+        });
+        return true;
+    }
+
     private bool VerifyPlayerCharacterData(PlayerCharacter character, int expectedCurrentHp, int expectedTempHp)
     {
         Assert.Multiple(() =>
@@ -199,11 +219,7 @@ public class PcHealthManagerTests
             Assert.That(character.Level, Is.EqualTo(playerCharacterFixture.Level));
             Assert.That(character.Name, Is.EqualTo(playerCharacterFixture.Name));
             Assert.That(character.Stats, Is.EqualTo(playerCharacterFixture.Stats));
-            // HP Deep Verification
-            Assert.That(character.HitPoints.NonLeathal, Is.EqualTo(playerCharacterFixture.HitPoints.NonLeathal));
-            Assert.That(character.HitPoints.Max, Is.EqualTo(playerCharacterFixture.HitPoints.Max));
-            Assert.That(character.HitPoints.Temp, Is.EqualTo(expectedTempHp));
-            Assert.That(character.HitPoints.Current, Is.EqualTo(expectedCurrentHp));
+            AssertHitPointDataIsAccurate(character.HitPoints, expectedCurrentHp, expectedTempHp);
         });
         return true;
     }

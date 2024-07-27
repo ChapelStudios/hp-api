@@ -86,6 +86,7 @@ public class PcHealthManager(
         // We don't really care if this fails because it will just use the default value of None if it doesn't exist
         _ = player.Defenses.TryGetValue(damageType, out var applicableDefense);
 
+        // In a bigger application I might spread this logic out to a rules engine and a static dictionary of messages
         (int damageToApply, string resistanceMsg) = applicableDefense switch
         {
             DefenseType.Immunity => (0, "Immunity"),
@@ -104,7 +105,7 @@ public class PcHealthManager(
             damageToApply,
             resistanceMsg);
 
-
+        // resolve temp hp first
         if (player.HitPoints.Temp > 0)
         {
             var applicableTempDamage =  Math.Min(damageToApply, player.HitPoints.Temp);
