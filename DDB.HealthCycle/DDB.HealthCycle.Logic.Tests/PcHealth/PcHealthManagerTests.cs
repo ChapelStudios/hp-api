@@ -158,6 +158,28 @@ public class PcHealthManagerTests
             Times.Once);
     }
 
+    [Test()]
+    public async Task AddTempHpAsync_ReturnsNullWhenUpsertFails()
+    {
+        playerCharacterFixture.HitPoints.Temp = 0;
+        _pcRepoMock.Setup(p => p.UpsertPlayerCharacterAsync(It.IsAny<PlayerCharacter>()))
+            .ReturnsAsync(false);
+
+        var pcHealthManager = GetSUT();
+
+        var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, 1);
+
+        Assert.That(result, Is.Null);
+
+        _pcRepoMock.Verify(p => p.GetCharacterByIdAsync(playerCharacterFixture.Id), Times.Once);
+        _pcRepoMock.Verify(
+            p => p.UpsertPlayerCharacterAsync(It.Is<PlayerCharacter>(p => VerifyPlayerCharacterData(
+                p,
+                playerCharacterFixture.HitPoints.Current,
+                1))),
+            Times.Once);
+    }
+
     private PcHealthManager GetSUT()
     {
         return new(
