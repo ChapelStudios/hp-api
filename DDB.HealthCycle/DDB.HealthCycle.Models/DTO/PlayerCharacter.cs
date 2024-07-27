@@ -1,4 +1,6 @@
-﻿namespace DDB.HealthCycle.Models.DTO;
+﻿using DDB.HealthCycle.Models.Enums;
+
+namespace DDB.HealthCycle.Models.DTO;
 
 public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abilities)
 {
@@ -15,5 +17,5 @@ public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abil
 
     public PlayerCharacterAbilities Stats { get; set; } = abilities;
 
-    public List<DamageTypeDefense> Defenses { get; set; } = [];
+    public Dictionary<DamageType, DefenseType> Defenses { get; set; } = [];
 }

@@ -45,14 +45,20 @@
       }
     }
   ],
-  "defenses": [
-    {
-      "type": "fire",
-      "defense": "immunity"
-    },
-    {
-      "type": "slashing",
-      "defense": "resistance"
-    }
-  ]
+  // I've reworked this into a Dictionary / JS Object, this allows us to have the type indexed for easier look ups
+  "defenses": {
+    "Fire": "Immunity",
+    "Slashing": "Resistance"
+  },
+  // Original for reference
+  //"defenses": [
+  //  {
+  //    "type": "fire",
+  //    "defense": "immunity"
+  //  },
+  //  {
+  //    "type": "slashing",
+  //    "defense": "resistance"
+  //  }
+  //]
 }
