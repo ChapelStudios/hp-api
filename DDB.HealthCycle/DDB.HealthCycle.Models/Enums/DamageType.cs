@@ -6,6 +6,7 @@ namespace DDB.HealthCycle.Models.Enums;
 [JsonConverter(typeof(StringEnumConverter))]
 public enum DamageType
 {
+    None,
     Bludgeoning,
     Piercing,
     Slashing,
