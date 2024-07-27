@@ -4,11 +4,12 @@ using DDB.HealthCycle.DataAccess.PlayerCharacters;
 using DDB.HealthCycle.Models.DTO;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
 
 namespace DDB.HealthCycle.Logic.PcHealth.Tests;
 
 // ToDo: come back and add testing for expected exceptions to be surfaced when thrown
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+[Parallelizable(ParallelScope.All)]
 [TestFixture()]
 public class PcHealthManagerTests
 {

@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34526.213
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Server", "DDB.HealthCycle.Server\DDB.HealthCycle.Server.csproj", "{4BD64AD7-4432-415A-9C86-C3B1186B4B7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Server", "DDB.HealthCycle.Server\DDB.HealthCycle.Server.csproj", "{4BD64AD7-4432-415A-9C86-C3B1186B4B7A}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ddb.healthcycle.client", "ddb.healthcycle.client\ddb.healthcycle.client.esproj", "{10538898-3588-47DA-A5C5-FC5D338334C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.DataAccess", "DDB.HealthCycle.DataAccess\DDB.HealthCycle.DataAccess.csproj", "{EFFF80CA-0D3D-418B-BD8C-3DD50E162DA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.DataAccess", "DDB.HealthCycle.DataAccess\DDB.HealthCycle.DataAccess.csproj", "{EFFF80CA-0D3D-418B-BD8C-3DD50E162DA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Data", "DDB.HealthCycle.Data\DDB.HealthCycle.Data.csproj", "{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Data", "DDB.HealthCycle.Data\DDB.HealthCycle.Data.csproj", "{0C05DF7D-1B07-4D40-BA4B-EA4D56F49D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Models", "DDB.HealthCycle.Models\DDB.HealthCycle.Models.csproj", "{F8A3F208-1923-408A-B2FF-F85283FE162A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Models", "DDB.HealthCycle.Models\DDB.HealthCycle.Models.csproj", "{F8A3F208-1923-408A-B2FF-F85283FE162A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9D571FBA-C1F7-4261-A65D-9E183794A18C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Logic", "DDB.HealthCycle.Logic\DDB.HealthCycle.Logic.csproj", "{A837823D-4952-407D-AEEA-98119CC56D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Logic", "DDB.HealthCycle.Logic\DDB.HealthCycle.Logic.csproj", "{A837823D-4952-407D-AEEA-98119CC56D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.LogicTests", "DDB.HealthCycle.LogicTests\DDB.HealthCycle.LogicTests.csproj", "{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Logic.Tests", "DDB.HealthCycle.Logic.Tests\DDB.HealthCycle.Logic.Tests.csproj", "{6AF6B8A5-4CFD-40FF-A72D-631251069926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,13 +51,16 @@ Global
 		{A837823D-4952-407D-AEEA-98119CC56D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A837823D-4952-407D-AEEA-98119CC56D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A837823D-4952-407D-AEEA-98119CC56D68}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF6B8A5-4CFD-40FF-A72D-631251069926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF6B8A5-4CFD-40FF-A72D-631251069926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF6B8A5-4CFD-40FF-A72D-631251069926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF6B8A5-4CFD-40FF-A72D-631251069926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6AF6B8A5-4CFD-40FF-A72D-631251069926} = {9D571FBA-C1F7-4261-A65D-9E183794A18C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F054BD1-A4C3-4B45-BB31-26D34A9724F9}
