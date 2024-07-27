@@ -19,7 +19,7 @@ public class PlayerCharacterRepo(
     /// <param name="id">Id of the PlayerCharacter</param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
-    public async Task<PlayerCharacterRecord> GetCharacterRecordById(string id)
+    public async Task<PlayerCharacterRecord> GetCharacterRecordByIdAsync(string id)
     {
         return await _pcContext.PlayerCharacterRecords
             .FirstAsync(c => c.Id == id) ?? throw new ArgumentOutOfRangeException(nameof(id), "Character not found");
@@ -32,9 +32,9 @@ public class PlayerCharacterRepo(
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the JSON data cannot be deserialized.</exception>
-    public async Task<PlayerCharacter> GetCharacterById(string id)
+    public async Task<PlayerCharacter> GetCharacterByIdAsync(string id)
     {
-        var record = await GetCharacterRecordById(id);
+        var record = await GetCharacterRecordByIdAsync(id);
         return record.Unpack() ?? throw new FormatException("Character json corrupted");
     }
 
@@ -43,14 +43,14 @@ public class PlayerCharacterRepo(
     /// </summary>
     /// <param name="playerCharacter">Character data to update.</param>
     /// <returns>A bool letting you know if the data was saved correctly.</returns>
-    public async Task<bool> UpsertPlayerCharacter(PlayerCharacter playerCharacter)
+    public async Task<bool> UpsertPlayerCharacterAsync(PlayerCharacter playerCharacter)
     {
         try
         {
             bool isSuccess = false;
             try
             {
-                var existing = await GetCharacterRecordById(playerCharacter.Id);
+                var existing = await GetCharacterRecordByIdAsync(playerCharacter.Id);
                 existing.Pack(playerCharacter);
                 existing.Updated = _dateTimeProvider.UtcNow;
             }

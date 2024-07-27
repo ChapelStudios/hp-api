@@ -10,7 +10,7 @@ public interface IPlayerCharacterRepo
     /// <param name="id">Id of the PlayerCharacter</param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
-    Task<PlayerCharacterRecord> GetCharacterRecordById(string id);
+    Task<PlayerCharacterRecord> GetCharacterRecordByIdAsync(string id);
 
     /// <summary>
     /// Gather a Player Character's data by their ID
@@ -19,12 +19,12 @@ public interface IPlayerCharacterRepo
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the ID doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the JSON data cannot be deserialized.</exception>
-    Task<PlayerCharacter> GetCharacterById(string id);
+    Task<PlayerCharacter> GetCharacterByIdAsync(string id);
 
     /// <summary>
     /// Either adds or updates a PlayerCharacter as appropriate.
     /// </summary>
     /// <param name="playerCharacter">Character data to update.</param>
     /// <returns>A bool letting you know if the data was saved correctly.</returns>
-    Task<bool> UpsertPlayerCharacter(PlayerCharacter playerCharacter);
+    Task<bool> UpsertPlayerCharacterAsync(PlayerCharacter playerCharacter);
 }
