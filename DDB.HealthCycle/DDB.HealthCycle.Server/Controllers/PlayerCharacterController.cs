@@ -7,6 +7,8 @@ namespace DDB.HealthCycle.Server.Controllers;
 [Route("[controller]")]
 public class PlayerCharacterController(ILogger<PlayerCharacterController> _logger, IPcHealthManager _pcHealthManager) : ControllerBase
 {
+    private const string _unableToSaveErrorMessage = "Unable to save updated character data, please try again";
+
     /// <summary>
     /// Gets the Json data for a Player Character.
     /// </summary>
@@ -68,7 +70,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
             var result = await _pcHealthManager.HealAsync(id, amount);
 
             return result == null
-                ? StatusCode(500, "Unable to save updated character data, please try again")
+                ? StatusCode(500, _unableToSaveErrorMessage)
                 : Ok(result);
         }
         catch (ArgumentOutOfRangeException)
@@ -78,7 +80,51 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unexpected error occurred while attempting to heal PlayerCharacter data for Id {id}", id);
-            return StatusCode(500, "Unable to save updated character data, please try again");
+            return StatusCode(500, _unableToSaveErrorMessage);
+        }
+    }
+
+    /// <summary>
+    /// Applies a given amount of Temp HP to the specified PlayerCharacter.
+    /// </summary>
+    /// <param name="id">ID of the PlayerCharacter to apply Temp HP on.</param>
+    /// <param name="amount">Number of Temp hit points to apply. Must be a positive number.</param>
+    /// <returns>The updated <see cref="PlayerCharacterHealthStats"/> after applying the Temp HP.</returns>
+    /// <response code="200">Payload of resulting <see cref="PlayerCharacterHealthStats"/> after applying the Temp HP.</response>
+    /// <response code="204">PlayerCharacter not found.</response>
+    /// <response code="400"><paramref name="amount"/> is too low.</response>
+    /// <response code="500">Internal error.</response>
+    [HttpGet("{id}/add-temp-hp")]
+    [ProducesResponseType(typeof(PlayerCharacterHealthStats), 200)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> AddTempHp(string id, [FromQuery] int amount)
+    {
+        if (amount <= 0)
+        {
+            return StatusCode(400, "Temp HP amounts much be positive numbers");
+        }
+
+        // Again we should theoretically check and fail out of the requesting user dosn't have access to modify the PC
+        // but there is no user data for this expirement.
+
+        try
+        {
+            var result = await _pcHealthManager.AddTempHpAsync(id, amount);
+
+            return result == null
+                ? StatusCode(500, _unableToSaveErrorMessage)
+                : Ok(result);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            return StatusCode(204);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error occurred while attempting to add Temp HP to PlayerCharacter data for Id {id}", id);
+            return StatusCode(500, _unableToSaveErrorMessage);
         }
     }
 }
