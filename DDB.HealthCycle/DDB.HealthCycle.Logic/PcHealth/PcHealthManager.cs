@@ -41,8 +41,8 @@ public class PcHealthManager(
         _logger.LogInformation("Healed player {playerToHeal} for {applicableHealing} HP", playerToHeal, applicableHealing);
         player.HitPoints.Current = player.HitPoints.Current + applicableHealing;
 
-        await _pcRepo.UpsertPlayerCharacterAsync(player);
-
-        return player.HitPoints;
+        return await _pcRepo.UpsertPlayerCharacterAsync(player)
+            ? player.HitPoints
+            : null;
     }
 }
