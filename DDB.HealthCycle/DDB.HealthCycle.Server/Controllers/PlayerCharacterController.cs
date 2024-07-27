@@ -14,11 +14,11 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="200">Payload of <see cref="PlayerCharacter"/> with spacific id.</response>
     /// <response code="204"><see cref="PlayerCharacter"/> not found.</response>
     /// <response code="500">Internal error.</response>
-    [HttpGet(Name = "{id}")]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(PlayerCharacter), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> GetPlayerCharacter(string id)
     {
         try
         {
@@ -51,7 +51,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="204">PlayerCharacter not found.</response>
     /// <response code="400"><paramref name="amount"/> is too low.</response>
     /// <response code="500">Internal error.</response>
-    [HttpGet(Name = "{id}/heal")]
+    [HttpGet("{id}/heal")]
     [ProducesResponseType(typeof(PlayerCharacter), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
