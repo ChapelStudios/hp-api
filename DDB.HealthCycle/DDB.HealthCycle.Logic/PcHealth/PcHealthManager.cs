@@ -1,5 +1,4 @@
-﻿using DDB.HealthCycle.DataAccess.DateTimeProvider;
-using DDB.HealthCycle.DataAccess.PlayerCharacters;
+﻿using DDB.HealthCycle.DataAccess.PlayerCharacters;
 using DDB.HealthCycle.Models.DTO;
 using Microsoft.Extensions.Logging;
 
@@ -7,8 +6,7 @@ namespace DDB.HealthCycle.Logic.PcHealth;
 
 public class PcHealthManager(
     IPlayerCharacterRepo _pcRepo,
-    ILogger<PcHealthManager> _logger,
-    IDateTimeProvider _dateTimeProvider
+    ILogger<PcHealthManager> _logger
 ) : IPcHealthManager
 {
     /// <summary>

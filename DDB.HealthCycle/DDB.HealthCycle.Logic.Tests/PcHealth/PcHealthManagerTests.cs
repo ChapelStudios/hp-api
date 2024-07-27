@@ -16,7 +16,6 @@ public class PcHealthManagerTests
     private readonly Fixture _fixture = new();
     private readonly Mock<IPlayerCharacterRepo> _pcRepoMock = new();
     private readonly Mock<ILogger<PcHealthManager>> _loggerMock = new();
-    private readonly Mock<IDateTimeProvider> _dateTimeProviderMock = new();
 
     private readonly PlayerCharacter playerCharacterFixture;
 
@@ -184,8 +183,7 @@ public class PcHealthManagerTests
     {
         return new(
             _pcRepoMock.Object,
-            _loggerMock.Object,
-            _dateTimeProviderMock.Object
+            _loggerMock.Object
         );
     }
 
