@@ -54,6 +54,7 @@ public class PlayerCharacterRepo(
                 existing.Pack(playerCharacter);
                 existing.Updated = _dateTimeProvider.UtcNow;
             }
+            // We only wanna catch issues with finding the record, we should surface anything else
             catch (ArgumentOutOfRangeException)
             {
                 var newPC = new PlayerCharacterRecord(playerCharacter)
@@ -70,7 +71,7 @@ public class PlayerCharacterRepo(
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unknown exception while upserting Character Id: {playerCharacterId}", playerCharacter.Id);
+            _logger.LogError(ex, "Unexpected exception while upserting Character Id: {playerCharacterId}", playerCharacter.Id);
             throw;
         }
     }
