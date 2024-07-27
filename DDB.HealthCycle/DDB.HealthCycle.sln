@@ -13,7 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Data", "DDB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Models", "DDB.HealthCycle.Models\DDB.HealthCycle.Models.csproj", "{F8A3F208-1923-408A-B2FF-F85283FE162A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9D571FBA-C1F7-4261-A65D-9E183794A18C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Logic", "DDB.HealthCycle.Logic\DDB.HealthCycle.Logic.csproj", "{A837823D-4952-407D-AEEA-98119CC56D68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.LogicTests", "DDB.HealthCycle.LogicTests\DDB.HealthCycle.LogicTests.csproj", "{CEE9600A-124C-4E13-BAEC-32A4A7252ED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
