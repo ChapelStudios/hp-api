@@ -49,7 +49,7 @@
   "defenses": {
     "Fire": "Immunity",
     "Slashing": "Resistance"
-  },
+  }
   // Original for reference
   //"defenses": [
   //  {
