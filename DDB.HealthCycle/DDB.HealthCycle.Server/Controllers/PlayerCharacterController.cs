@@ -51,7 +51,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="204">PlayerCharacter not found.</response>
     /// <response code="400"><paramref name="amount"/> is too low.</response>
     /// <response code="500">Internal error.</response>
-    [HttpGet("{id}/heal")]
+    [HttpPost("{id}/heal")]
     [ProducesResponseType(typeof(PlayerCharacterHealthStats), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -95,7 +95,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="204">PlayerCharacter not found.</response>
     /// <response code="400"><paramref name="amount"/> is too low.</response>
     /// <response code="500">Internal error.</response>
-    [HttpGet("{id}/add-temp-hp")]
+    [HttpPost("{id}/add-temp-hp")]
     [ProducesResponseType(typeof(PlayerCharacterHealthStats), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -140,7 +140,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     /// <response code="204">PlayerCharacter not found.</response>
     /// <response code="400"><paramref name="amount"/> is too low.</response>
     /// <response code="500">Internal error.</response>
-    [HttpGet("{id}/damage")]
+    [HttpPost("{id}/damage")]
     [ProducesResponseType(typeof(PlayerCharacterHealthStats), 200)]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
