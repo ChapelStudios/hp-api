@@ -17,7 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9D571FBA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Logic", "DDB.HealthCycle.Logic\DDB.HealthCycle.Logic.csproj", "{A837823D-4952-407D-AEEA-98119CC56D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDB.HealthCycle.Logic.Tests", "DDB.HealthCycle.Logic.Tests\DDB.HealthCycle.Logic.Tests.csproj", "{6AF6B8A5-4CFD-40FF-A72D-631251069926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDB.HealthCycle.Logic.Tests", "DDB.HealthCycle.Logic.Tests\DDB.HealthCycle.Logic.Tests.csproj", "{6AF6B8A5-4CFD-40FF-A72D-631251069926}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2399E8BC-88CD-49A1-AA2B-FE6DE8B61534}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
