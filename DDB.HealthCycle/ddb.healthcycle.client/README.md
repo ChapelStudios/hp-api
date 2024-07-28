@@ -1,3 +1,13 @@
+# HealthCycle Client project
+
+## This is a Default Project
+This is the scaffolded client from the React and ASP.NET core project template. I have intentions of using this API to make a little dungeon crawler minigame for my website, www.chapelstudios.dev - which is in the middle of an overhaul.
+
+No code has currently been implemented in this project.
+
+The initial template README.md follows.
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
