@@ -145,7 +145,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> ApplyDamage(string id, [FromQuery] int amount, [FromQuery] DamageType damageType)
+    public async Task<IActionResult> ApplyDamage(string id, [FromQuery] int amount, [FromQuery] DamageType damageType = DamageType.None)
     {
         if (amount <= 0)
         {
