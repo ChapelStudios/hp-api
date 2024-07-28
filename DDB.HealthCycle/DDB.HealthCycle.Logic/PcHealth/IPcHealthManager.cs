@@ -31,7 +31,7 @@ public interface IPcHealthManager
     /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the Temp HP has been applied. If the upsert fails, null is returned instead.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    Task<PlayerCharacterHealthStats?> AddTempHpAsync(string playerToAffect, int amount);
+    Task<PlayerCharacterHealthStats?> ApplyTempHpAsync(string playerToAffect, int amount);
 
     /// <summary>
     /// Apply damage of a given type to player character after considering defenses and temp hp.

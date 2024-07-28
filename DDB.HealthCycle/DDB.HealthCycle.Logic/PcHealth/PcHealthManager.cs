@@ -53,7 +53,7 @@ public class PcHealthManager(
     /// <returns>An updated <see cref="PlayerCharacterHealthStats"/> after the Temp HP has been applied. If the upsert fails, null is returned instead.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the <paramref name="playerToAffect"/> doesn't return any results.</exception>
     /// <exception cref="FormatException">Thrown if the Player data is corrupt.</exception>
-    public async Task<PlayerCharacterHealthStats?> AddTempHpAsync(string playerToAffect, int amount)
+    public async Task<PlayerCharacterHealthStats?> ApplyTempHpAsync(string playerToAffect, int amount)
     {
         var player = await _pcRepo.GetCharacterByIdAsync(playerToAffect);
 

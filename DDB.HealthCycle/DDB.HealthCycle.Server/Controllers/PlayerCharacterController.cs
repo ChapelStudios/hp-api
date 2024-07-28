@@ -100,7 +100,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> AddTempHp(string id, [FromQuery] int amount)
+    public async Task<IActionResult> ApplyTempHp(string id, [FromQuery] int amount)
     {
         if (amount <= 0)
         {
@@ -112,7 +112,7 @@ public class PlayerCharacterController(ILogger<PlayerCharacterController> _logge
 
         try
         {
-            var result = await _pcHealthManager.AddTempHpAsync(id, amount);
+            var result = await _pcHealthManager.ApplyTempHpAsync(id, amount);
 
             return result == null
                 ? StatusCode(500, _unableToSaveErrorMessage)

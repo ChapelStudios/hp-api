@@ -112,14 +112,14 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async Task AddTempHpAsync_OnlyEffectsTempHp()
+    public async Task ApplyTempHpAsync_OnlyEffectsTempHp()
     {
         playerCharacterFixture.HitPoints.Temp = 0;
         var tempHp = _fixture.Create<int>();
 
         var pcHealthManager = GetSUT();
 
-        var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, tempHp);
+        var result = await pcHealthManager.ApplyTempHpAsync(playerCharacterFixture.Id, tempHp);
 
         Assert.That(result, Is.Not.Null);
         AssertHitPointDataIsAccurate(
@@ -141,13 +141,13 @@ public class PcHealthManagerTests
     [TestCase(0, 20, 20)]
     [TestCase(10, 10, 10)]
     [TestCase(10, 5, 10)]
-    public async Task AddTempHpAsync_OnlyTakesTheHighestTempValue(int existingTempHp, int incomingTempHp, int expectedTempHp)
+    public async Task ApplyTempHpAsync_OnlyTakesTheHighestTempValue(int existingTempHp, int incomingTempHp, int expectedTempHp)
     {
         playerCharacterFixture.HitPoints.Temp = existingTempHp;
 
         var pcHealthManager = GetSUT();
 
-        var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, incomingTempHp);
+        var result = await pcHealthManager.ApplyTempHpAsync(playerCharacterFixture.Id, incomingTempHp);
 
         Assert.That(result, Is.Not.Null);
         AssertHitPointDataIsAccurate(
@@ -165,7 +165,7 @@ public class PcHealthManagerTests
     }
 
     [Test()]
-    public async Task AddTempHpAsync_ReturnsNullWhenUpsertFails()
+    public async Task ApplyTempHpAsync_ReturnsNullWhenUpsertFails()
     {
         playerCharacterFixture.HitPoints.Temp = 0;
         _pcRepoMock.Setup(p => p.UpsertPlayerCharacterAsync(It.IsAny<PlayerCharacter>()))
@@ -173,7 +173,7 @@ public class PcHealthManagerTests
 
         var pcHealthManager = GetSUT();
 
-        var result = await pcHealthManager.AddTempHpAsync(playerCharacterFixture.Id, 1);
+        var result = await pcHealthManager.ApplyTempHpAsync(playerCharacterFixture.Id, 1);
 
         Assert.That(result, Is.Null);
 
