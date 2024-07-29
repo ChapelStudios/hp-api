@@ -1,6 +1,6 @@
 {
   "name": "Briv",
-  "id": "",
+  "id": "A0771105-CAE2-44FE-9AEB-CBA2D1DFA29B",
   "level": 5,
   // I've upgraded this from a simple number into an object in order to allow us to track more complex HP data like temp HP
   // Old line for reference:
