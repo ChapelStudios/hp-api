@@ -55,6 +55,8 @@ Furthermore, the code is separating into the following libraries:
     1. This is defunct for the moment and will be used in future updates
 2. **DDB.HealthCycle.Data**
     1. This houses code for the Entity Framework context as well as test data initialization.
+    2. There are some larger changes from the original test json data to allow for a more robust system
+        1. Please see the notes in the `{Solution Directory}/DDB.HealthCycle.Data/TestData/briv.json` file for more insight.
 2. **DDB.HealthCycle.DataAccess**
     1. This contains repos and other data providers
 3. **DDB.HealthCycle.Logic**
