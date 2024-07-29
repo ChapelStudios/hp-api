@@ -1,4 +1,4 @@
-# PlayerCharacter API
+﻿# D&D Beyond Health Cycle API Test Solution
 
 This API provides endpoints to manage the health of player characters in the DDB HealthCycle system.
 
@@ -6,7 +6,10 @@ This API provides endpoints to manage the health of player characters in the DDB
 
 ## Table of Contents 
 
-- [Intro](#Installation)
+- [Intro](#Intro)
+  - [Design](#The-Design)
+  - [Code](#The-Code)
+  - [Roadmap](#Roadmap)
 - [Installation](#Installation)
   - [Local SQL DB Setup](#Local-SQL-DB-Setup)
   - [Client Setup](#Client-Setup)
@@ -23,8 +26,58 @@ This API provides endpoints to manage the health of player characters in the DDB
 - [License](#License)
 
 ---
+
 ## Intro
-Write stuff here jake....
+This is the start of an API for a slightly larger project now. It was based on a coding challenge by the D&D Beyond
+software development team found [here](https://github.com/DnDBeyond/back-end-developer-challenge).
+
+### The Design
+Right now this is just a simple API that can be used to Heal, Damage or apply Temp HP to a Player Character. You can also gather the player character's overall data. 
+
+> There is currently no creation available and the only sample character is Briv, (ID: A0771105-CAE2-44FE-9AEB-CBA2D1DFA29B).
+
+
+The intent is to add support for weapon item types that add attacks and a sample set of monsters. This will lead into a game that will work in 2 main phases:
+1. **The game starts you at a base before you begin your dungeon crawl.**
+    1. Here you can select from items obtained to give you a variety of attacks to use in the dungeon.
+    2. All adventurers start with a base weapon
+2. **You enter a dungeon and fight random monsters, gaining a new item at the end**
+    1. Each fight the monsters each have randomly selected defenses from the system currently in place.
+    2. Monsters have more defenses the more fights you've completed in that dungeon.
+    3. After a final boss battle, you gain an item and return to your base to start again
+
+### The Code
+This is setup to run on a SQL backend to store Player Character data with a C# .Net 8 Core API to interact with it.
+As this is intended to largely mimic a real enterprise level solution, the API has been split into 3 layers, Repository (Data Access), Manager (Logic) and Controller.
+
+Furthermore, the code is separating into the following libraries:
+1. **ddb.healthCycle.client**
+    1. This is defunct for the moment and will be used in future updates
+2. **DDB.HealthCycle.Data**
+    1. This houses code for the Entity Framework context as well as test data initialization.
+2. **DDB.HealthCycle.DataAccess**
+    1. This contains repos and other data providers
+3. **DDB.HealthCycle.Logic**
+    1. This contains all the logic for the API. (In many repositories this may be called DDB.HealthCycle.Business)
+4. **DDB.HealthCycle.Models**
+    1. Contains all model types for the API:
+        1. DataModels: 1-for1 Table Match models used by the Context
+            1. Some People might put these in the DDB.HealthCycle.Data project itself   ¯\\\_(ツ)_/¯
+        2. Data Transfer Objects (DTO)
+        3. Enums
+            1. I heavily considered putting this in Data because it can feel like static data more so than a part of a larger data.   ¯\\\_(ツ)_/¯
+5. **DDB.HealthCycle.Server**
+    1. The actual API server for this project.
+    2. Run this to run the entire solution. (Including the client when it is reintegrated into the project.)
+
+### Roadmap
+After the mechanics layed out in the design section are in place and a basic set of monsters and weapons have been added, these are the next ideas in no particular order
+* **Leveling / HP gain Mechanics**
+* **Classes**
+  * I'd like to look to add classes with simple abilities tied to them may effect HP mechanic above
+* Abilities effecting attacks
+* Items that effect abilities, defenses and health
+* Additional Monsters / Loot
 
 ## Installation
 Instructions on how to install and set up the solution.
@@ -32,7 +85,7 @@ Instructions on how to install and set up the solution.
 Start by cloning the repository:
 
 ```bash
-  git clone https://github.com/yourusername/projectname.git
+  git clone https://github.com/ChapelStudios/hp-api.git
 ```
 
 ### Local SQL DB Setup
@@ -59,9 +112,9 @@ The client is not currently set up and has been removed from project startup by 
         <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
   ```
   
-If the project still starts, ensure Visual Studio has DDB.HealthCycle.Server` set as the startup project and not `multiple projects`
+If the project still starts, ensure Visual Studio has `DDB.HealthCycle.Server` set as the startup project and not `multiple projects`
 
-When the client is reactivated, make sure to run `npm install` from the `ddb.healthcycle.client` directory.
+> If the client is reactivated, make sure to run `npm install` from the `ddb.healthcycle.client` directory.
 
 ### Server Setup
 From the `DDB.HealthCycle.Server` directory in the solution directory, run `dotnet restore`.
@@ -83,6 +136,7 @@ Instructions to run the API with or without the React frontend:
 
 3. **Access the swagger page:**
     Open your browser and navigate to `https://localhost:7163/swagger/index.html` (or the port specified in your launch settings).
+    > You can use ID `A0771105-CAE2-44FE-9AEB-CBA2D1DFA29B` to interact with the sample character *Briv*.
 
 ---
 
@@ -174,7 +228,7 @@ Common error responses include:
 
 Unit tests are included for the `DDB.HealthCycle.Logic` library. There are probably a couple of other things that could be unit tested but these are the most important items. Due to the nature of this project I also skipped on testing to ensure Exceptions thrown from underlying components were raised.
 
-All tests are written using the NUnit framework.
+> All C# tests are written using the NUnit framework.
 
 ### Running Unit Tests
 From the solution directory, run `dotnet test`.
