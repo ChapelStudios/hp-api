@@ -18,4 +18,6 @@ public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abil
     public PlayerCharacterAbilities Stats { get; set; } = abilities;
 
     public Dictionary<DamageType, DefenseType> Defenses { get; set; } = [];
+
+    public List<Item> Items { get; set; } = [];
 }

@@ -1,7 +1,7 @@
 ﻿namespace DDB.HealthCycle.Models.DTO;
 
 public record ItemModifier(
-    string XX,
-    string YY,
+    string AffectedObject,
+    string AffectedValue,
     int Value
 );
