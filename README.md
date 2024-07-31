@@ -107,24 +107,7 @@ The current setup will ensure that the database and all tables are created with 
       ```
 
 ### Client Setup
-The client is not currently set up and has been removed from project startup.
-To re-enable it, add the following properties to the `PropertyGroup` in the `DDB.HealthCycle.Server.csproj` file.
-
-  ```xml
-        <SpaRoot>..\ddb.healthcycle.client</SpaRoot>
-        <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
-        <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
-  ```
-
-The following line also needs to be returned to the `launchSettings.json` file. It should be added to the `environmentVariables` section of each profile.
-
-  ```xml
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
-  ```
-
-If the project still starts, ensure Visual Studio has `DDB.HealthCycle.Server` set as the startup project and not `multiple projects`
-
-> If the client is reactivated, make sure to run `npm install` from the `ddb.healthcycle.client` directory.
+Make sure to run `npm install` from the `ddb.healthcycle.client` directory.
 
 ### Server Setup
 From the `DDB.HealthCycle.Server` directory in the solution directory, run `dotnet restore`.
@@ -148,6 +131,8 @@ Instructions to run the API with or without the React frontend:
     Open your browser and navigate to `https://localhost:7163/swagger/index.html` (or the port specified in your launch settings).
     > You can use ID `A0771105-CAE2-44FE-9AEB-CBA2D1DFA29B` to interact with the sample character *Briv*.
 
+4. **Access the client:**
+    Open your browser and navigate to `https://localhost:707/swagger/index.html`.
 ---
 
 ## Endpoints
