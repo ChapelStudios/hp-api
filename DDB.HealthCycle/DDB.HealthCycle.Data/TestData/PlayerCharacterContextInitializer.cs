@@ -19,7 +19,6 @@ public static class PlayerCharacterContextInitializer
 
         PlayerCharacter? briv = JsonConvert.DeserializeObject<PlayerCharacter>(jsonData)
             ?? throw new Exception("Invalid json data.");
-        briv.Id = Guid.NewGuid().ToString();
 
         pcContext.Add(new PlayerCharacterRecord(briv));
 
