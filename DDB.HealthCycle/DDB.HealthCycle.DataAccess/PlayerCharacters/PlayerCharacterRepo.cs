@@ -22,7 +22,7 @@ public class PlayerCharacterRepo(
     public async Task<PlayerCharacterRecord> GetCharacterRecordByIdAsync(string id)
     {
         return await _pcContext.PlayerCharacterRecords
-            .FirstAsync(c => c.Id == id) ?? throw new ArgumentOutOfRangeException(nameof(id), "Character not found");
+            .FirstAsync(c => c.Id.ToLower() == id.ToLower()) ?? throw new ArgumentOutOfRangeException(nameof(id), "Character not found");
     }
 
     /// <summary>
