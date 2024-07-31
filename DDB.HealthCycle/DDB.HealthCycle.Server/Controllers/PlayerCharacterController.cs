@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DDB.HealthCycle.Server.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PlayerCharacterController(ILogger<PlayerCharacterController> _logger, IPcHealthManager _pcHealthManager) : ControllerBase
 {
     private const string _unableToSaveErrorMessage = "Unable to save updated character data, please try again";
