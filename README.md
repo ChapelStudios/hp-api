@@ -133,6 +133,7 @@ Instructions to run the API with or without the React frontend:
 
 4. **Access the client:**
     Open your browser and navigate to `https://localhost:707/swagger/index.html`.
+
 ---
 
 ## Endpoints
