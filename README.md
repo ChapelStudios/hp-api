@@ -38,7 +38,7 @@ Right now this is just a simple API that can be used to Heal, Damage or apply Te
 
 
 The intent is to add support for weapon item types that add attacks and a sample set of monsters. This will lead into a game that will work in 2 main phases:
-1. **The game starts you at a base before you begin your dungeon crawl.**
+1. **The game starts you at a base before you begin your dungeon crawl**
     1. Here you can select from items obtained to give you a variety of attacks to use in the dungeon.
     2. All adventurers start with a base weapon
 2. **You enter a dungeon and fight random monsters, gaining a new item at the end**
@@ -74,9 +74,10 @@ Furthermore, the code is separating into the following libraries:
 
 ### Roadmap
 After the mechanics layed out in the design section are in place and a basic set of monsters and weapons have been added, these are the next ideas in no particular order
-* **Leveling / HP gain Mechanics**
-* **Classes**
-  * I'd like to look to add classes with simple abilities tied to them may effect HP mechanic above
+* Leveling / HP gain Mechanics
+* Classes
+  * I'd like to look to add classes with simple abilities tied to them
+  * This will likely effect HP mechanic above
 * Abilities effecting attacks
 * Items that effect abilities, defenses and health
 * Additional Monsters / Loot
@@ -106,14 +107,21 @@ The current setup will ensure that the database and all tables are created with 
       ```
 
 ### Client Setup
-The client is not currently set up and has been removed from project startup by removing the following properties from the PropertyGroup in the `DDB.HealthCycle.Server.csproj` file.
+The client is not currently set up and has been removed from project startup.
+To re-enable it, add the following properties to the `PropertyGroup` in the `DDB.HealthCycle.Server.csproj` file.
 
   ```xml
         <SpaRoot>..\ddb.healthcycle.client</SpaRoot>
         <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
         <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
   ```
-  
+
+The following line also needs to be returned to the `launchSettings.json` file. It should be added to the `environmentVariables` section of each profile.
+
+  ```xml
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+  ```
+
 If the project still starts, ensure Visual Studio has `DDB.HealthCycle.Server` set as the startup project and not `multiple projects`
 
 > If the client is reactivated, make sure to run `npm install` from the `ddb.healthcycle.client` directory.
@@ -128,12 +136,12 @@ Instructions to run the API with or without the React frontend:
 
 1. **Navigate to the DDB.HealthCycle.Server project directory:**
     ```bash
-    cd DDB.HealthCycle.Server
+        cd DDB.HealthCycle.Server
     ```
 
 2. **Run the server:**
     ```bash
-    dotnet run
+        dotnet run
     ```
 
 3. **Access the swagger page:**
@@ -171,7 +179,7 @@ Heals the specified player character by a given amount.
   - Code: 400 (Invalid amount)
   - Code: 500 (Internal error)
 
-### Add Temporary HP
+### Apply Temporary HP to Player Character
 Applies a given amount of temporary hit points to the specified player character.
 
 - URL: `/PlayerCharacter/{id}/add-temp-hp`
@@ -241,5 +249,3 @@ The test results will be displayed in the terminal. Ensure all tests pass before
 This solution is based on a coding challenge project for D&D Beyond / Wizards of the Coast / Hasbro that can be found [here](https://github.com/DnDBeyond/back-end-developer-challenge).
 
 Any code provided past that provided by the original project is provided via use of the [MIT licensing agreement](https://opensource.org/license/mit).
-
-
