@@ -248,4 +248,4 @@ The test results will be displayed in the terminal. Ensure all tests pass before
 ## Licensing
 This solution is based on a coding challenge project for D&D Beyond / Wizards of the Coast / Hasbro that can be found [here](https://github.com/DnDBeyond/back-end-developer-challenge).
 
-Any code provided past that provided by the original project is provided via use of the [MIT licensing agreement](https://opensource.org/license/mit).
+Any code past that provided by the original project is provided via use of the [MIT licensing agreement](https://opensource.org/license/mit).
