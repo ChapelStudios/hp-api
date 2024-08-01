@@ -1,5 +1,5 @@
 ﻿using DDB.HealthCycle.Models.DataModels;
-using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.DTO.Actor;
 
 namespace DDB.HealthCycle.DataAccess.PlayerCharacters;
 public interface IPlayerCharacterRepo

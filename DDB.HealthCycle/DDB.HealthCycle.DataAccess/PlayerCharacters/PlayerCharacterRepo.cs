@@ -1,7 +1,7 @@
 ﻿using DDB.HealthCycle.Data;
 using DDB.HealthCycle.DataAccess.DateTimeProvider;
 using DDB.HealthCycle.Models.DataModels;
-using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.DTO.Actor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

@@ -1,4 +1,4 @@
-﻿using DDB.HealthCycle.Models.DTO;
+﻿using DDB.HealthCycle.Models.DTO.Actor;
 using DDB.HealthCycle.Models.Enums;
 
 namespace DDB.HealthCycle.Logic.PcHealth;

@@ -1,4 +1,4 @@
-﻿using DDB.HealthCycle.Models.DTO;
+﻿using DDB.HealthCycle.Models.DTO.Actor;
 using Newtonsoft.Json;
 
 namespace DDB.HealthCycle.Models.DataModels;

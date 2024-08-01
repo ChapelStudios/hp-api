@@ -1,5 +1,5 @@
 ﻿using DDB.HealthCycle.Models.DataModels;
-using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.DTO.Actor;
 using Newtonsoft.Json;
 
 namespace DDB.HealthCycle.Data.TestData;

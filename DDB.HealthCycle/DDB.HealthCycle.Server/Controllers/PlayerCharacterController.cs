@@ -1,9 +1,10 @@
 using DDB.HealthCycle.Logic.PcHealth;
-using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.DTO.Actor;
 using DDB.HealthCycle.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DDB.HealthCycle.Server.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class PlayerCharacterController(ILogger<PlayerCharacterController> _logger, IPcHealthManager _pcHealthManager) : ControllerBase

@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using DDB.HealthCycle.DataAccess.DateTimeProvider;
 using DDB.HealthCycle.DataAccess.PlayerCharacters;
-using DDB.HealthCycle.Models.DTO;
+using DDB.HealthCycle.Models.DTO.Actor;
 using DDB.HealthCycle.Models.Enums;
 using Microsoft.Extensions.Logging;
 using Moq;
