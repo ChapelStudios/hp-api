@@ -1,4 +1,4 @@
-﻿namespace DDB.HealthCycle.Models.DTO;
+﻿namespace DDB.HealthCycle.Models.DTO.Actor;
 
 public class PlayerCharacterHealthStats(int max)
 {

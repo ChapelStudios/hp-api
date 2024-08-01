@@ -1,6 +1,6 @@
 ﻿using DDB.HealthCycle.Models.Enums;
 
-namespace DDB.HealthCycle.Models.DTO;
+namespace DDB.HealthCycle.Models.DTO.Actor;
 
 public class PlayerCharacter(string id, int maxHP, PlayerCharacterAbilities abilities)
 {
